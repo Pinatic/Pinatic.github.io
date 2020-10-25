@@ -26,16 +26,12 @@ const SteamProfile = (props) => {
 
     useEffect(() => {
         API.getProfileInfo(GameID, result => setProfileInfo(result))
-    }, [])
+    }, [GameID])
 
 
     useEffect(() => {
         API.getOwnedGames(GameID, result => setOwnedGames(result))
-    }, [])
-
-
-    console.log(profileInfo)
-    console.log(ownedGames)
+    }, [GameID])
 
     return profileInfo && ownedGames ? <ProfileCard GameID={GameID}>
         <ProfileImage url={profileInfo && profileInfo.avatarfull}/>

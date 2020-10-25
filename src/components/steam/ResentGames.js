@@ -38,7 +38,7 @@ const getGameImageUrl = (appid, hash) => {
     return API.getGameImageUrl(appid, hash);
 }
 
-export default () => {
+const ResentGames = () => {
     const [resentGames, setResentGames] = useState();
     const [totalAchievements, setTotalAchievements] = useState({});
     const [myAchievements, setMyAchievements] = useState({});
@@ -49,7 +49,7 @@ export default () => {
         API.GetResentGames(id, (res) => {
             setResentGames(res)
 
-            res.forEach(game => {
+            res && res.forEach(game => {
                 API.GetGameAchievements(game.appid, (achievements => {
                     setTotalAchievements(prev => ({...prev, [game.appid]: achievements.achievementpercentages.achievements.length}))
                 }))
@@ -59,17 +59,13 @@ export default () => {
                 }))
             });
         })
-    }, [])
+    }, [id])
 
-
-
-    console.log(myAchievements, totalAchievements)
-
-    return <>
+    return resentGames ? <>
     <Title>My recent games</Title>
     <Container>
-        {resentGames && resentGames.map(game => {
-            return <Box>
+        { resentGames.slice(0,4).map(game => {
+            return <Box key={game.appid}>
                 <ProfileCard GameID={game.appid}>
                     <ProfileImage height={85} url={getGameImageUrl(game.appid, game.img_logo_url)}/>
                     <Name>{game.name}</Name>
@@ -88,5 +84,7 @@ export default () => {
             </Box>
         })}
     </Container>
-    </>
+    </> : null
 }
+
+export default ResentGames;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components';
 
 import API from '../../api/api';
@@ -22,9 +22,10 @@ const Container = styled.div`
 const Box = styled.div`
   padding: 10px;
   margin: 5px;
+  cursor: pointer;
 `
 
-export default () => {
+const SteamFriends = () => {
     const [friends, setFriends] = useState();
     const { id } = useParams();
 
@@ -32,20 +33,27 @@ export default () => {
         API.GetFriends(id, res => {
             setFriends(res)
         })
-    }, [])
-
-    console.log(friends)
+    }, [id])
 
     return <>
         <Title>My first three Friends</Title>
         <Container>
             {
                 friends && friends.friendslist.friends.sort((a,b) => a.friend_since - b.friend_since).slice(0, 3).map(friend => {
-                return <Box>
-                    <SteamProfile key={friend.steamid} gameId={friend.steamid} />
-                </Box>
+                return <Link 
+                    key={friend.steamid}
+                    to={{
+                        pathname: '/' + friend.steamid 
+                    }}
+                >
+                    <Box>
+                        <SteamProfile key={friend.steamid} gameId={friend.steamid} />
+                    </Box>
+                </Link>
                 })
             }
         </Container>
     </>
 }
+
+export default SteamFriends
