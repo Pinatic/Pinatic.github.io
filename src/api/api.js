@@ -28,4 +28,8 @@ export default class API {
     static GetPlayerAchievements(id, gameId, callback) {
         axios.get(API.endpoint + 'stats/' + SteamProfileMap(id) + '/' + gameId).then(res => callback(res.data))
     }
+
+    static getGameImageUrl(app, hash) {
+        return API.endpoint + 'game-image/' + app + '/' + hash;
+    }
 }

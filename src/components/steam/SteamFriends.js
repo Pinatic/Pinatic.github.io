@@ -12,6 +12,11 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     animation: fadein 3s;
+
+    @media (max-width: 768px) {
+        display: grid;
+    }
+
 `
 
 const Box = styled.div`
