@@ -3,7 +3,8 @@ import axios from 'axios'
 import SteamProfileMap from './SteamProfiles';
 
 export default class API {
-    static endpoint = "https://pinatic-api.herokuapp.com/"
+    // static endpoint = "https://pinatic-api.herokuapp.com/"
+    static endpoint = "http://localhost:3005/"
 
     static getProfileInfo(id, callback) {
         axios.get(API.endpoint + 'summary/' + SteamProfileMap(id)).then(res => callback(res.data))
@@ -31,5 +32,13 @@ export default class API {
 
     static getGameImageUrl(app, hash) {
         return API.endpoint + 'game-image/' + app + '/' + hash;
+    }
+
+    static GetWillemStatus(callback) {
+        axios.get(API.endpoint + 'willem-status').then(res => callback(res.data))
+    }
+
+    static OpenTheHub(callback) {
+        axios.get(API.endpoint + 'the-hub').then(res => callback(res.data))
     }
 }

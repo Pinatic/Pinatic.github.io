@@ -12,6 +12,7 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
+import TheHub from './components/the-hub';
 
 const Container = styled.div`
     display: flex;
@@ -43,6 +44,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/the-hub">
+          <TheHub />
+        </Route>
         <Route path="/:id">
           <Layout />
         </Route>

@@ -39,7 +39,7 @@ const SteamProfile = (props) => {
         <Status><StatusDot color={getStatusColor(profileInfo.personastate)} /><StatusText>{getStatus(profileInfo.personastate)}</StatusText></Status>
         <Divider />
         <Label>Owned games</Label>
-        <Value><CountUp end={ownedGames.game_count || 200} duration={2} /></Value>
+        <Value>{ ownedGames.game_count ?<CountUp end={ownedGames.game_count} duration={2} /> : 'N.A'}</Value>
     </ProfileCard> : <></>
 }
 

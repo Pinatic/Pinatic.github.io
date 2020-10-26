@@ -11,6 +11,7 @@ import Label from '../reusables/Label';
 import Value from '../reusables/Value';
 import Divider from '../reusables/Divider';
 import Title from '../reusables/Title';
+import CountUp from 'react-countup';
 
 
 const Container = styled.div`
@@ -33,6 +34,25 @@ const Name = styled.span`
     font-size: 24px;
     font-weight: 500;
 `
+
+const StyledProgess = styled(ProgressBar)`
+    .progress-bar {
+        transition: width 2s linear;
+    }
+`
+
+
+const CustomProgess = (props) => {
+    const [progress, setProgress] = useState(0)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setProgress(props.now)
+        }, 1)
+    }, [props.now])
+
+    return <StyledProgess {...props} now={progress} />
+}
 
 const getGameImageUrl = (appid, hash) => {
     return API.getGameImageUrl(appid, hash);
@@ -72,12 +92,12 @@ const ResentGames = () => {
                     <Divider />
 
                     <Label>PlayTime</Label>
-                    <Value>{Math.round(game.playtime_forever / 60)} hours</Value>
+                    <Value><CountUp end={Math.round(game.playtime_forever / 60)} duration={2} /> hours</Value>
                     { 
                         totalAchievements[game.appid] ? <>
                             <Divider />
                             <Label>Progress</Label>
-                            <ProgressBar striped variant="success" now={100 / totalAchievements[game.appid] * myAchievements[game.appid]} />
+                            <CustomProgess striped variant="success" now={100 / totalAchievements[game.appid] * myAchievements[game.appid]} />
                         </> : <div style={{marginTop: 63}} />
                     }
                 </ProfileCard>
