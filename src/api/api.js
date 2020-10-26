@@ -3,8 +3,8 @@ import axios from 'axios'
 import SteamProfileMap from './SteamProfiles';
 
 export default class API {
-    // static endpoint = "https://pinatic-api.herokuapp.com/"
-    static endpoint = "http://localhost:3005/"
+    static endpoint = "https://pinatic-api.herokuapp.com/"
+    // static endpoint = "http://localhost:3005/"
 
     static getProfileInfo(id, callback) {
         axios.get(API.endpoint + 'summary/' + SteamProfileMap(id)).then(res => callback(res.data))
